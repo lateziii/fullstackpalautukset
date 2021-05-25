@@ -1,0 +1,30 @@
+{
+  "name": "04",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lateziii/fullstackpalautukset.git"
+  },
+  "author": "lauri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lateziii/fullstackpalautukset/issues"
+  },
+  "homepage": "https://github.com/lateziii/fullstackpalautukset#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
