@@ -51,9 +51,9 @@ const App = () => {
       console.log(error)
       setMessage(`${person.name} removed already`)
       setTimeout(() => {
-      setMessage(null)
-    }, 5000)
-    }).finally(() => {
+        setMessage(null)
+      }, 5000)
+      }).finally(() => {
       setPersons(persons.map(p => (p.id !== person.id ? p : person)))
     })
   }
@@ -80,16 +80,22 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        setError(false)
+        setMessage(`Added ${newName}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       }).catch(error => {
         console.log(error.response.data)
+        setError(true)
+        setMessage(`Error: ${error.response.data.error}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+        
       })
 
-      setError(false)
-      console.log(error)
-      setMessage(`Added ${newName}`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      
     }
   }
   const handleRemove = (person) => {
