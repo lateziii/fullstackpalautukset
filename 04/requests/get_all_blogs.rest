@@ -1,9 +1,7 @@
-POST http://localhost:3003/api/blogs/60ace20b4f38a554f8bd3585
+PUT http://localhost:3003/api/blogs/660ace20a4f38a554f8bd3584
 Content-Type: application/json
 
 {
-    "title": "uusi",
-    "author": "minä",
-    "url": "uusi",
-    "likes": 42
+"title": "testimuokattu"
 }
+
