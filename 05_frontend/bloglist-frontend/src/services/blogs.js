@@ -11,15 +11,15 @@ const setToken = newToken => {
   token = `bearer ${newToken}`
 } 
 
-const create = async newObject => {
+const create = async (newObject) => {
   const config = {
     headers: { Authorization: token },
   }
-  const response = await  axios.post(baseUrl, newObject, config)
+  const response = await axios.post(baseUrl, newObject, config)
   return response.data
 }
-const update = (newObject) => {
-  console.log('häh', newObject)
+const like = (newObject) => {
+  newObject.likes += 1
   const request = axios.put(`${baseUrl}/${newObject._id}`, newObject)
   return request.then(response => response.data)
 }
@@ -32,4 +32,4 @@ const remove = (newObject) => {
   return request.then(response => response.data)
 }
 
-export  { getAll, create, setToken, update, remove }
+export  default { getAll, create, setToken, like, remove }

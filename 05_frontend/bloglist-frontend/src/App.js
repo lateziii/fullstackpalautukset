@@ -12,9 +12,6 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [message, setMessage] = useState('')
 
 
@@ -62,33 +59,49 @@ const App = () => {
     }
   }
 
-  const handleNewBlog = async (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title, author, url
-    }
+  const handleNewBlog = async (blog) => {
     blogService.setToken(localStorage.getItem('token'))
-    blogService
-    .create(blogObject)
-    .then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog))
-      setMessage({message:`a new blog ${title} by ${author} added `, error:false})
+    const postaus = await blogService.create(blog)
+    if(postaus) {
+      setBlogs(blogs.concat(postaus))
+      setMessage({message:`a new blog ${postaus.title} by ${postaus.author} added `, error:false})
       setTimeout(() => {
         setMessage('')}, 5000
       )
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-    }).catch(error => {
+    } else {
       setMessage({message:`Failure`, error:true})
       setTimeout(() => {
         setMessage('')}, 5000
       )
+    }
+  
+  }
+
+  const addLikeHandler = async (blog) => {
+    const likedBlog =  await blogService.like(blog)
+    console.log(likedBlog)
+    const findAndReplace = blogs.map(blog => {
+      return blog.id === likedBlog._id ? likedBlog : blog
     })
-    
-    
+    console.log(findAndReplace)
+    const sortedBlogs = findAndReplace.sort((a, b) => (a.likes < b.likes) ? 1: -1)
+      setBlogs( sortedBlogs)
     
   }
+
+  const removeHandler =  async (blog) => {
+    blogService.setToken(localStorage.getItem('token'))
+    const response = window.confirm(`Poistetaanko ${blog.title}`)
+    if (response) {
+      const removed = await blogService.remove(blog)
+      if(removed.status === 401) {
+        const filtered = blogs.filter(b => b.id !== blog.id)
+        setBlogs(filtered)
+      }
+    }
+  }
+    
+  
 
   const loginForm = () => (
     <Togglable buttonLabel = "log in ">
@@ -116,6 +129,7 @@ const App = () => {
       </form>
       </Togglable>
   )
+
   loginForm.propTypes = {
     handleLogin: PropTypes.func.isRequired,
     username: PropTypes.string.isRequired,
@@ -124,15 +138,16 @@ const App = () => {
 
   const blogForm = () => (
     <div>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      {blogs.map(blog => {
+        return (
+          <Blog key={blog.id} blog={blog} addLikeHandler={blog => addLikeHandler(blog)} removeHandler={blog => removeHandler(blog)} />
+        )
+      })}
     </div>
   )
   const addBlog = () => (
     <Togglable buttonLabel="add blog">
-      <CreateBlogForm handleNewBlog={handleNewBlog} title={title} author={author} url={url} setTitle={setTitle}
-       setAuthor={setAuthor} setUrl={setUrl}></CreateBlogForm>
+      <CreateBlogForm handleNewBlog={handleNewBlog}></CreateBlogForm>
     </Togglable>
   )
 
