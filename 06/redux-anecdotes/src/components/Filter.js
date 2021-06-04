@@ -1,12 +1,11 @@
 import React from 'react'
 import {changeFilter} from '../reducers/filterReducer'
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 
-const Filter = () => {
-  const dispatch = useDispatch()
+const Filter = (props) => {
   const handleChange = (event) => {
     // input-kentän arvo muuttujassa event.target.value
-    dispatch(changeFilter(event.target.value))
+    props.changeFilter(event.target.value)
   }
 
   const style = {
@@ -20,4 +19,5 @@ const Filter = () => {
   )
 }
 
-export default Filter
+const ConnectedFilter = connect(null, { changeFilter })(Filter)
+export default ConnectedFilter

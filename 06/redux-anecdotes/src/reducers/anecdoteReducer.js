@@ -39,7 +39,6 @@ export const createAnecdote = (content) => {
   }
 }
 const sort = (anecdotes) => {
-  console.log(anecdotes)
   return anecdotes.sort((a, b) => {
     if(a.votes > b.votes) {
       return -1
@@ -52,7 +51,6 @@ const sort = (anecdotes) => {
 const reducer = (state = [], action) => {
   switch(action.type) {
     case 'VOTE':
-      console.log(action.data, 'on tälläinen')
       return sort(action.data)
     case 'NEW_ANECDOTE':
       return sort([...state, action.data])
