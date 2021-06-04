@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const Notification = () => {
   const dispatch = useDispatch()
-  let notification = useSelector(state => state.notifications)
+  let notification = useSelector(state => state.notifications.content)
 
   const style = {
     border: 'solid',

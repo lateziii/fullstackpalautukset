@@ -1,4 +1,4 @@
-const notificationReducer = (state = '', action) => {
+const notificationReducer = (state = nullNotification, action) => {
     switch(action.type) {
         case 'ADD':
             return action.data
@@ -11,24 +11,38 @@ const notificationReducer = (state = '', action) => {
     }
 }
 
-export const addNotification = (content) => {
-    return {
-      type: 'ADD',
-      data: `you added, ${content}`
+export const addNotification = (content, time) => {
+    return async dispatch => {
+        dispatch({
+            type: 'ADD',
+            data: {content, time}
+        })
+        setTimeout(() => {
+         dispatch(resetNotification())}, time * 1000)   
+      
     }
 }
+const nullNotification = {
+    content: ''
+}
 
-export const voteNotification = (content) => {
-    return {
-      type: 'VOTENOTIFICATION',
-      data: `you voted, ${content}`
+export const voteNotification = (content, time) => {
+    return async dispatch => {
+        dispatch({
+            type: 'VOTENOTIFICATION',
+            data: {content, time}
+        })
+        setTimeout(() => {
+            dispatch(resetNotification())}, time * 1000)   
     }
 }
 
 export const resetNotification = () => {
-    return {
-      type: 'RESET',
-      data: ''
+    return async dispatch => {
+        dispatch({
+            type: 'RESET',
+            data: ''
+        })
     }
 }
 

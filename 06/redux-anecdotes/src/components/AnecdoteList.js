@@ -15,15 +15,13 @@ const AnecdoteList = () => {
     })
   
 
-    const vote = (id) => {
+    const vote = async (id) => {
         dispatch(voteAnecdote(id))
-        const anecdote = anecdotes.filter(a => {
-            return a.id === id
-        })[0]
-        dispatch(voteNotification(anecdote.content))
-        setTimeout(() => {
-            dispatch(resetNotification())}, 5000
-        )
+        const anecdote = anecdotes.filter(a => 
+             a.id === id
+        )[0]
+        dispatch(voteNotification(`you voted ${anecdote.content}`, 1))
+        
     }
 
     return(

@@ -1,3 +1,4 @@
+import anecdoteService from '../services/anecdotes'
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -9,35 +10,36 @@ const anecdotesAtStart = [
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
-const asObject = (anecdote) => {
-  return {
-    content: anecdote,
-    id: getId(),
-    votes: 0
-  }
-}
 
-const initialState = anecdotesAtStart.map(asObject)
 
 
 
 export const voteAnecdote = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id: id }
+  return async dispatch => {
+    let anecdotes = await anecdoteService.getAll()
+    const anecdoteToVote = anecdotes.filter(a => a.id === id)[0]
+    const voted = anecdoteService.vote(anecdoteToVote)
+    anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'VOTE',
+      data: anecdotes
+    })
   }
 }
 export const createAnecdote = (content) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: {
-      content: content,
-      id: getId(),
-      votes: 0
-    }
+  return async  dispatch => {
+    const newAnecdote = await anecdoteService.createNew(content)
+    console.log(newAnecdote)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      data: newAnecdote
+      
+    })
+    
   }
 }
 const sort = (anecdotes) => {
+  console.log(anecdotes)
   return anecdotes.sort((a, b) => {
     if(a.votes > b.votes) {
       return -1
@@ -47,20 +49,27 @@ const sort = (anecdotes) => {
   })
 }
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = [], action) => {
   switch(action.type) {
     case 'VOTE':
-      const id = action.data.id
-      const anecdoteToVote = state.find(a => a.id === id)
-      const voted = {
-        ...anecdoteToVote,
-        votes: anecdoteToVote.votes + 1
-      }
-      return sort(state.map(anecdote => anecdote.id !== id ? anecdote : voted))
+      console.log(action.data, 'on tälläinen')
+      return sort(action.data)
     case 'NEW_ANECDOTE':
-      return sort(state.concat(action.data))
+      return sort([...state, action.data])
+    case 'INIT_ANECDOTES':
+      return sort(action.data)
     default:
       return state
+  }
+}
+
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes,
+    })
   }
 }
 
