@@ -88,15 +88,27 @@ blogsRouter.put('/:id', async (request, response, next) => {
     }
     console.log(request.body.comment)
     console.log(blog)
-    const editedBlog = {
-        title: request.body.title || blog.title,
-        author: request.body.author || blog.author,
-        url: request.body.url || blog.url,
-        likes: request.body.likes || blog.likes,
-        comments: blog.comments.concat(request.body.comment),
+    if(request.body.comment ==! null) {
+        const editedBlog = {
+            title: request.body.title || blog.title,
+            author: request.body.author || blog.author,
+            url: request.body.url || blog.url,
+            likes: request.body.likes || blog.likes,
+            comments: blog.comments.concat(request.body.comment),
+        }
+        const result = await Blog.findByIdAndUpdate(request.params.id, editedBlog, { new: true })
+        response.status(200).send(result)
+    } else {
+        const editedBlog = {
+            title: request.body.title || blog.title,
+            author: request.body.author || blog.author,
+            url: request.body.url || blog.url,
+            likes: request.body.likes || blog.likes,
+            comments: blog.comments,
+        }
+            const result = await Blog.findByIdAndUpdate(request.params.id, editedBlog, { new: true })
+            response.status(200).send(result)
     }
-    const result = await Blog.findByIdAndUpdate(request.params.id, editedBlog, { new: true })
-    response.status(200).send(result)
 })
 
 blogsRouter.put('/id'), async (request, response) => {

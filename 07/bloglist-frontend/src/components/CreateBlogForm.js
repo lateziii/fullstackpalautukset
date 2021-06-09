@@ -2,6 +2,9 @@ import { connect } from 'react-redux'
 import { infoNotification, alertNotification } from '../reducers/alertReducer'
 import { createBlog} from '../reducers/blogReducer'
 
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Card from '@material-ui/core/Card'
 
 const CreateBlogForm = (props) => {
     const submit = (event) => {
@@ -23,12 +26,12 @@ const CreateBlogForm = (props) => {
     }
   
     return(
-        <div>
+        <Card>
         <h2>create new</h2>
         <form id="form" onSubmit={submit}>
             <div>
             title
-                <input
+                <TextField
                 id='title'
                 type="text"
                 name="title"
@@ -36,7 +39,7 @@ const CreateBlogForm = (props) => {
             </div>
             <div>
             author
-                <input
+                <TextField
                 id='author'
                 type="text"
                 name="author"
@@ -44,15 +47,17 @@ const CreateBlogForm = (props) => {
             </div>
             <div>
             url
-                <input
+                <TextField
                 id='url'
                 type="text"
                 name="url"
             />
             </div>
-            <button type="submit">create</button>
+            <br/>
+            <Button color='primary' variant='contained' type="submit">create</Button>
         </form>
-        </div>
+        <br/>
+        </Card>
     )
 }
 const mapDispatchToProps = {

@@ -21,10 +21,9 @@ import {
   useRouteMatch,
   useHistory,
 } from "react-router-dom"
+import './styles/Blog.css'
 
-
-
-
+import Container from '@material-ui/core/Container'
 
 const App = (props) => {
 
@@ -54,46 +53,48 @@ const App = (props) => {
   console.log(JSON.parse(localStorage.getItem('loggedBlogappUser')))
 
   return (
-    <Router>
-    <NavBar/>
-    <div>
-      <Alert/>
-      <Switch>
-        {typeof JSON.parse(localStorage.getItem('loggedBlogappUser')) === 'undefined' || JSON.parse(localStorage.getItem('loggedBlogappUser')) === null 
-        ? <div>
-          <Route path='/login'>
-            <h1>Login</h1>
-            <LoginForm />
-          </Route>
-          </div>
-        : <div>
-          <Route path='/users/:id'>
-            <User></User>
-          </Route>
-          <Route path = '/blogs/:id/'>
-            <Blog/>
-          </Route>
-          
-          <Route path='/blogs'>
-            <h2>blogs</h2>
-            {addBlog()}
-            
-            {<BlogList/>}
-          </Route>
-          <Route path='/users'>
-            <UserList /> 
-          </Route>
-          
-          <Route path='/logout'>
-            <Logout></Logout>
-          </Route>
-          </div>}
-
-
-          
-        </Switch>
-    </div>
+   <Container>
+      <Router>
+        <NavBar/>
+        <div>
+          <br/>
+          <br/>
+          <Alert/>
+          <Switch>
+            {typeof JSON.parse(localStorage.getItem('loggedBlogappUser')) === 'undefined' || JSON.parse(localStorage.getItem('loggedBlogappUser')) === null 
+            ? <Route path='/login'>
+                <h1>Login</h1>
+                <LoginForm />
+              </Route>
+            : <div>
+              <Route exact={true} path='/users/:id'>
+                <User></User>
+              </Route>
+              <Route exact={true} path = '/blogs/:id/'>
+                <Blog/>
+              </Route>
+              <Route path='/blogs'>
+                <h2>blogs</h2>
+                {addBlog()}
+                
+                {<BlogList/>}
+              </Route>
+              <Route path='/users'>
+                <UserList /> 
+              </Route>
+              
+              <Route path='/logout'>
+                <Logout></Logout>
+              </Route>
+              </div>}
+            </Switch>
+            <Route exact={true} path='/'>
+              <h1>Welcome !</h1>
+              <p>This is a homepage, which is empty</p>
+            </Route>
+        </div>
     </Router>
+   </Container>
   )
 }
 

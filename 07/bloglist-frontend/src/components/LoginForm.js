@@ -6,11 +6,16 @@ import { alertNotification, infoNotification } from '../reducers/alertReducer'
 import PropTypes from 'prop-types'
 import {useHistory} from 'react-router-dom'
 
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Typography  from '@material-ui/core/Typography'
+
 const LoginForm = (props) => {
   const history = useHistory()
 
     const handleLogin = async (event) => {
         event.preventDefault()
+        console.log('häh')
         const username = event.target.username.value
         const password = event.target.password.value
         try {
@@ -30,20 +35,20 @@ const LoginForm = (props) => {
         <div>
           <form onSubmit={handleLogin}>
             <div>
-              username
-                <input
+              <Typography>username</Typography>
+                <TextField
                 type="text"
                 name="username"
               />
             </div>
             <div>
-              password
-                <input
+              <Typography>password</Typography>
+                <TextField
                 type="password"
                 name="password"
               />
             </div>
-            <button type="submit">login</button>
+            <Button color='primary' variant='contained' type="submit">login</Button>
           </form>
         </div>
       )

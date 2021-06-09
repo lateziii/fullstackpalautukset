@@ -7,6 +7,10 @@ import {
     useParams
   } from "react-router-dom"
 
+import Card  from '@material-ui/core/Card'
+import Button  from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+
 const Blog = (props) => {
     
     const id = useParams().id
@@ -15,7 +19,7 @@ const Blog = (props) => {
     const blog = props.blogs.find(blog => blog._id === id)
     const comments = blog.comments
 
-    const like = async (props) => {
+    const like = (event) => {
         props.likeBlog(blog) 
     }
     const comment = (event) => {
@@ -45,14 +49,14 @@ const Blog = (props) => {
       }
 
     return (
-        <div>
+        <Card>
         <h2>{blog.title} – {blog.author}</h2>
                   <p>{blog.url}</p>
-                  <p> likes {blog.likes} <button id='like' onClick={() => like(blog)}>like</button></p>
+                  <p> likes {blog.likes} <Button color='primary' variant='contained' id='like' onClick={() => like(blog)}>like</Button></p>
                   <p>added by {blog.user.name}</p>
                   {getUser() === blog.user.username && (
                     <p>
-                        <button id='delete' onClick={() => remove(blog)}>remove</button>
+                        <Button color='primary' variant='contained' id='delete' onClick={() => remove(blog)}>remove</Button>
                   </p>)}
                   <h3>comments</h3>
                   {comments.map(comment => {
@@ -62,12 +66,12 @@ const Blog = (props) => {
                   })}
                   <h3>add own comment</h3>
                   <form onSubmit={comment}>
-                  <input name="comment" type='text'></input>
-                  <button type='submit'>comment</button>
+                  <TextField name="comment" type='text'></TextField>
+                  <Button color='primary' variant='contained' type='submit'>comment</Button>
                   </form>
                       
                   
-        </div>
+        </Card>
     )
 }
 const mapStateToProps = (state) => {

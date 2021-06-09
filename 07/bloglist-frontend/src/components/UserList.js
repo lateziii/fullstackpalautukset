@@ -11,29 +11,34 @@ import {
     useRouteMatch,
     useHistory,
   } from "react-router-dom"
+
+  import Table from '@material-ui/core/Table'
+  import TableBody from '@material-ui/core/TableBody'
+  import TableRow from '@material-ui/core/TableRow'
+  import TableCell from '@material-ui/core/TableCell'
   
 
 const UserList = (props) => {
     return(
         <div>
-            <h2>Users</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td><strong>blogs created</strong></td>
-                    </tr>
+            <h2>users</h2>
+            <Table>
+                <TableBody>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell><TableRow>blogs created</TableRow></TableCell>
+                    </TableRow>
 
                     {props.users.map(user => {
                         return(
-                            <tr key={user.id}>
-                                    <td ><Link to={`/users/${user.id}`}>{user.name}</Link></td>
-                                    <td> {user.blogs.length}</td>
-                            </tr>
+                            <TableRow key={user.id}>
+                                    <TableCell ><Link to={`/users/${user.id}`}>{user.name}</Link></TableCell>
+                                    <TableCell> {user.blogs.length}</TableCell>
+                            </TableRow>
                         )
                     })}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
         </div>
 
     ) 
