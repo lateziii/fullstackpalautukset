@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "GraphQl backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lauri",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.25.1",
+    "graphql": "^15.5.0",
+    "nodemon": "^2.0.7"
+  }
+}
