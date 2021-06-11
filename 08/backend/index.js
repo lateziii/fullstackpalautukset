@@ -152,14 +152,14 @@ const resolvers = {
       }
       const author = authors.find(a => a.name === args.author) 
       if(author) {
-              books.concat(book)
+              books = books.concat(book)
               console.log(book, 'added to', books)
               return book
       } else {
         const newAuthor = {name: args.author, born: null, id: uuid()}
-        authors.concat(newAuthor)
+        authors = authors.concat(newAuthor)
         console.log(newAuthor, 'added to', authors)
-        books.concat(book)
+        books = books.concat(book)
         console.log(book, 'added to', books)
         return book
       }
