@@ -32,7 +32,6 @@ const Authors = (props) => {
     return null
   }
 const authors = result.data.allAuthors
-console.log(authors)
   return (
     <div>
       <h2>authors</h2>
@@ -48,7 +47,7 @@ console.log(authors)
             </th>
           </tr>
           {authors.map(a =>
-            <tr key={a.born}>
+            <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
               <td>{a.bookCount}</td>

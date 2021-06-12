@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
 
 export const ALL_AUTHORS = gql`
   query {
@@ -26,7 +26,7 @@ export const CREATE_BOOK = gql`
       genres: $genres
     ) {
       title
-      author
+      author{name}
       published
       genres
       id
@@ -37,8 +37,42 @@ export const ALL_BOOKS = gql`
   query {
     allBooks {
       title
-      author
+      author{name}
+      published
+      genres
+      id
+    }
+  }
+`
+export const LOGIN = gql`
+mutation login($username: String!, $password: String!) {
+  login(username: $username, password: $password)  {
+    value
+  }
+}`
+export const GET_USER = gql`{
+  me {
+    username
+    favoriteGenre
+  }
+}`
+export const FIND_BOOKS = gql`
+  query allBooks($genre: String!){
+    allBooks(genre: $genre) {
+      title
+      author{name}
+      published
+      genres
+      id
+    }
+  }`
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      title
+      author{name}
       published
     }
   }
 `
+
