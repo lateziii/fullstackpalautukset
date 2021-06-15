@@ -12,7 +12,7 @@ app.use(cors());
 app.get("/api/ping", (_req: Request, res: Response) => {
     res.send("pong");
 });
-app.use('/api/diagnoses',diagnoseRouter);
+app.use('/api/diagnosis',diagnoseRouter);
 app.use('/api/patients',patientRouter);
 
 const PORT = 3001;
